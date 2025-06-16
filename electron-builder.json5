@@ -17,13 +17,7 @@
   "extraMetadata": {
     "main": "dist-electron/main.js"
   },
-  "mac": {
-    "target": [
-      "dmg"
-    ],
-    "artifactName": "${productName}-Mac-${version}-Installer.${ext}",
-    "identity": null
-  },
+
   "win": {
     "icon": "public/assets/jackybot.ico",
     "target": [
@@ -64,12 +58,7 @@
   "portable": {
     "artifactName": "${productName}-Windows-${version}-Portable.${ext}"
   },
-  "linux": {
-    "target": [
-      "AppImage"
-    ],
-    "artifactName": "${productName}-Linux-${version}.${ext}"
-  },
+
   "publish": {
     "provider": "github",
     "owner": "thomasboyle",

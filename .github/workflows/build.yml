@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -25,15 +25,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: |
-          if [ "$RUNNER_OS" == "macOS" ]; then
-            rm -rf node_modules package-lock.json
-            npm install --no-audit --no-fund
-            npm install @rollup/rollup-darwin-arm64 --no-audit --no-fund --optional
-          else
-            npm ci --no-audit --no-fund
-          fi
-        shell: bash
+        run: npm ci --no-audit --no-fund
 
       - name: Build and release
         env:

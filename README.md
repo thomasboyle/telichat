@@ -12,12 +12,10 @@
 ## 📥 Download
 
 ### Windows
-- **[📦 Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.0-Setup.exe)** - Recommended for most users
-- **[🚀 Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.0-Portable.exe)** - No installation required
+- **[📦 Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.2-Setup.exe)** - Recommended for most users
+- **[🚀 Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.2-Portable.exe)** - No installation required
 
-### Other Platforms
-- **[🐧 Linux AppImage](https://github.com/thomasboyle/telichat/releases/latest)** - Coming soon
-- **[🍎 macOS DMG](https://github.com/thomasboyle/telichat/releases/latest)** - Coming soon
+> **Note**: TeliChat is currently Windows-only. Linux and macOS support may be added in future releases.
 
 > **Note**: TeliChat includes automatic updates, so you'll always have the latest version!
 
@@ -127,10 +125,6 @@ TeliChat includes automatic update functionality:
 - Windows 10 or later
 - 100MB free disk space
 - Internet connection for cloud models and updates
-
-### Coming Soon
-- macOS 10.15 or later
-- Linux (Ubuntu 18.04+ or equivalent)
 
 ## 🤝 Contributing
 
