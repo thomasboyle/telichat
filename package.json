@@ -18,8 +18,9 @@
     "build:linux": "tsc && vite build && electron-builder --linux",
     "build:all": "tsc && vite build && electron-builder --win --mac --linux",
     "dist": "npm run build:all",
-    "publish": "tsc && vite build && electron-builder --publish=always",
-    "draft": "tsc && vite build && electron-builder --publish=never",
+    "publish": "npm run build && electron-builder --publish=always",
+    "draft": "npm run build && electron-builder --publish=never",
+    "rebuild": "npm rebuild && npm run build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

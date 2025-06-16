@@ -25,7 +25,15 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci --no-audit --no-fund
+        run: |
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            rm -rf node_modules package-lock.json
+            npm install --no-audit --no-fund
+            npm install @rollup/rollup-darwin-arm64 --no-audit --no-fund --optional
+          else
+            npm ci --no-audit --no-fund
+          fi
+        shell: bash
 
       - name: Build and release
         env:
