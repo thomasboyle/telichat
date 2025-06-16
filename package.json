@@ -1,7 +1,7 @@
 {
   "name": "ai-model-switcher-react-ts",
   "private": true,
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A powerful AI model management application",
   "author": "Thomas Boyle",
   "type": "module",
