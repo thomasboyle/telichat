@@ -12,8 +12,8 @@
 ## 📥 Download
 
 ### Windows
-- **[📦 Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.4-Setup.exe)** - Recommended for most users
-- **[🚀 Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.4-Portable.exe)** - No installation required
+- **[📦 Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.5-Setup.exe)** - Recommended for most users
+- **[🚀 Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.5-Portable.exe)** - No installation required
 
 If the direct links above don't work, download from the [latest release page](https://github.com/thomasboyle/telichat/releases/latest).
 
