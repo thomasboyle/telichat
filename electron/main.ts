@@ -272,10 +272,48 @@ function createWindow() {
   // Get initial window position
   const { x, y, width, height } = getWindowPosition()
   
+  // Simplify icon loading - try the most likely path first
+  let windowIcon: any
+  let iconPath: string
+  
+  if (VITE_DEV_SERVER_URL) {
+    iconPath = path.join(process.env.APP_ROOT || '', 'public', 'assets', 'jackybot.ico')
+  } else {
+    iconPath = path.join(RENDERER_DIST, 'assets', 'jackybot.ico')
+  }
+  
+  // Ensure absolute path
+  iconPath = path.resolve(iconPath)
+  
+  console.log('=== ICON DEBUG ===')
+  console.log('Trying to load icon from:', iconPath)
+  console.log('File exists:', fs.existsSync(iconPath))
+  console.log('VITE_DEV_SERVER_URL:', VITE_DEV_SERVER_URL)
+  console.log('RENDERER_DIST:', RENDERER_DIST)
+  console.log('process.env.APP_ROOT:', process.env.APP_ROOT)
+  
+  if (fs.existsSync(iconPath)) {
+    try {
+      windowIcon = nativeImage.createFromPath(iconPath)
+      console.log('Icon loaded successfully')
+      console.log('Icon isEmpty:', windowIcon.isEmpty())
+      console.log('Icon size:', windowIcon.getSize())
+      console.log('Icon toDataURL length:', windowIcon.toDataURL().length)
+    } catch (error) {
+      console.error('Failed to create icon from path:', error)
+      windowIcon = iconPath // Fallback to string path
+    }
+  } else {
+    console.error('Icon file not found at:', iconPath)
+    windowIcon = iconPath // Fallback to string path
+  }
+  
+  console.log('Final windowIcon type:', typeof windowIcon)
+  console.log('=== END ICON DEBUG ===')
+  
+
   const windowOptions: any = {
-    icon: VITE_DEV_SERVER_URL 
-      ? path.join(process.env.APP_ROOT || '', 'public', 'assets', 'jackybot.ico')
-      : path.join(process.env.APP_ROOT || '', 'dist', 'assets', 'jackybot.ico'),
+    icon: windowIcon,
     width: width,
     height: height,
     x: x,
@@ -300,6 +338,16 @@ function createWindow() {
   }
 
   win = new BrowserWindow(windowOptions)
+
+  // Try setting icon after window creation for Windows taskbar
+  if (process.platform === 'win32' && windowIcon && typeof windowIcon === 'object') {
+    try {
+      win.setIcon(windowIcon)
+      console.log('Set window icon after creation')
+    } catch (error) {
+      console.warn('Failed to set window icon after creation:', error.message)
+    }
+  }
 
   // Prevent window from closing, hide to tray instead
   win.on('close', (event) => {
@@ -337,10 +385,30 @@ function createSettingsWindow() {
     return
   }
 
+  // Use the same icon as main window
+  let windowIcon: any
+  let iconPath: string
+  
+  if (VITE_DEV_SERVER_URL) {
+    iconPath = path.join(process.env.APP_ROOT || '', 'public', 'assets', 'jackybot.ico')
+  } else {
+    iconPath = path.join(RENDERER_DIST, 'assets', 'jackybot.ico')
+  }
+  
+  iconPath = path.resolve(iconPath)
+  
+  if (fs.existsSync(iconPath)) {
+    try {
+      windowIcon = nativeImage.createFromPath(iconPath)
+    } catch (error) {
+      windowIcon = iconPath // Fallback to string path
+    }
+  } else {
+    windowIcon = iconPath // Fallback to string path
+  }
+
   const windowOptions: any = {
-    icon: VITE_DEV_SERVER_URL 
-      ? path.join(process.env.APP_ROOT || '', 'public', 'assets', 'jackybot.ico')
-      : path.join(process.env.APP_ROOT || '', 'dist', 'assets', 'jackybot.ico'),
+    icon: windowIcon,
     width: 900,
     height: 700,
     minWidth: 800,
@@ -406,6 +474,51 @@ app.whenReady().then(() => {
   // Set app user model ID for proper Windows integration
   if (process.platform === 'win32') {
     app.setAppUserModelId('com.telichat.app')
+    
+    // Force Windows to refresh taskbar icon
+    try {
+      const iconPath = VITE_DEV_SERVER_URL 
+        ? path.join(process.env.APP_ROOT || '', 'public', 'assets', 'jackybot.ico')
+        : path.join(process.env.APP_ROOT || '', 'dist', 'assets', 'jackybot.ico')
+      
+      const resolvedIconPath = path.resolve(iconPath)
+      
+      if (fs.existsSync(resolvedIconPath)) {
+        // Additional Windows-specific settings
+        console.log('Setting Windows app user model ID with icon path:', resolvedIconPath)
+      }
+    } catch (error) {
+      console.warn('Error setting Windows integration:', error.message)
+    }
+  }
+  
+  // Set app icon globally for Windows - try multiple approaches
+  if (process.platform === 'win32') {
+    const appIconPath = VITE_DEV_SERVER_URL 
+      ? path.join(process.env.APP_ROOT || '', 'public', 'assets', 'jackybot.ico')
+      : path.join(process.env.APP_ROOT || '', 'dist', 'assets', 'jackybot.ico')
+    
+    const resolvedIconPath = path.isAbsolute(appIconPath) ? appIconPath : path.resolve(appIconPath)
+    console.log('Setting global app icon:', resolvedIconPath)
+    console.log('Global icon file exists:', fs.existsSync(resolvedIconPath))
+    
+    if (fs.existsSync(resolvedIconPath)) {
+      try {
+        const appIcon = nativeImage.createFromPath(resolvedIconPath)
+        if (!appIcon.isEmpty()) {
+          console.log('Successfully loaded global app icon')
+          
+          // Store the icon for use by windows
+          global.appIcon = appIcon
+          console.log('Stored global app icon for window use')
+          
+        } else {
+          console.warn('Global app icon is empty')
+        }
+      } catch (error) {
+        console.warn('Failed to load global app icon:', error.message)
+      }
+    }
   }
   
   createWindow()
