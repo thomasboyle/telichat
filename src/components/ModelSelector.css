@@ -1,0 +1,39 @@
+.model-selector-container {
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.model-selector {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sortable-model-icon {
+  cursor: grab;
+}
+
+.model-icon {
+  padding: 6px 12px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.model-icon.selected {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.model-icon.dragging {
+  cursor: grabbing;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+} 

@@ -1,0 +1,118 @@
+.prompt-container {
+  padding: 8px;
+  margin-bottom: 8px;
+  -webkit-app-region: drag;
+}
+
+.actions-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  /* color: #ccc; */
+  -webkit-app-region: drag;
+}
+
+.actions-icon {
+  margin-right: 8px;
+}
+
+.actions-label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.context-indicator {
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
+  font-size: 12px;
+  color: #ccc;
+  opacity: 0.8;
+}
+
+.context-indicator svg {
+  margin-right: 4px;
+}
+
+.prompt-form {
+  width: 100%;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-right: 60px;
+}
+
+.prompt-input {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 10px 48px 10px 10px;
+  color: white;
+  font-size: 16px;
+  box-sizing: border-box;
+  -webkit-app-region: no-drag;
+  transition: all 0.2s ease;
+}
+
+.prompt-input::placeholder {
+  color: #ccc;
+}
+
+.prompt-input:hover {
+  background-color: rgba(255, 255, 255, 0.185) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  transform:scale(1.01) !important;
+  /* box-shadow: 0 1px 10px rgba(255, 255, 255, 0.4) !important; */
+}
+
+.prompt-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.submit-button {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  -webkit-app-region: no-drag;
+}
+
+.submit-button:hover {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  transform: translateY(-50%) scale(1.2) !important;
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4) !important;
+}
+
+.submit-button:active {
+  transform: translateY(-50%) scale(0.9) !important;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* .submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+} */
+
+
+.submit-button svg {
+  width: 16px;
+  height: 16px;
+} 

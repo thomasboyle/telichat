@@ -1,0 +1,53 @@
+{
+  "name": "ai-model-switcher-react-ts",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A powerful AI model management application",
+  "author": "Thomas Boyle",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thomasboyle/telichat.git"
+  },
+  "homepage": "https://github.com/thomasboyle/telichat",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && electron-builder",
+    "build:win": "tsc && vite build && electron-builder --win",
+    "build:mac": "tsc && vite build && electron-builder --mac",
+    "build:linux": "tsc && vite build && electron-builder --linux",
+    "build:all": "tsc && vite build && electron-builder --win --mac --linux",
+    "dist": "npm run build:all",
+    "publish": "tsc && vite build && electron-builder --publish=always",
+    "draft": "tsc && vite build && electron-builder --publish=never",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "dotenv": "^16.5.0",
+    "electron-store": "^10.0.1",
+    "electron-updater": "^6.6.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "electron": "^30.0.1",
+    "electron-builder": "^24.13.3",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
+    "vite-plugin-electron": "^0.28.6",
+    "vite-plugin-electron-renderer": "^0.14.5"
+  },
+  "main": "dist-electron/main.js"
+}

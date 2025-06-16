@@ -1,0 +1,81 @@
+// @see - https://www.electron.build/configuration/configuration
+{
+  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+  "appId": "com.ai-model-switcher.app",
+  "asar": true,
+  "productName": "TeliChat",
+  "icon": "public/assets/jackybot.ico",
+  "directories": {
+    "output": "release/${version}"
+  },
+  "files": [
+    "dist",
+    "dist-electron",
+    "public/**/*",
+    "public/assets/jackybot.ico"
+  ],
+  "extraMetadata": {
+    "main": "dist-electron/main.js"
+  },
+  "mac": {
+    "target": [
+      "dmg"
+    ],
+    "artifactName": "${productName}-Mac-${version}-Installer.${ext}",
+    "identity": null
+  },
+  "win": {
+    "icon": "public/assets/jackybot.ico",
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      },
+      {
+        "target": "portable",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "artifactName": "${productName}-Windows-${version}-Installer.${ext}",
+    "verifyUpdateCodeSignature": false,
+    "signAndEditExecutable": false,
+    "sign": null,
+    "certificateFile": null,
+    "certificatePassword": null
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "allowElevation": true,
+    "createDesktopShortcut": "always",
+    "createStartMenuShortcut": true,
+    "deleteAppDataOnUninstall": false,
+    "runAfterFinish": true,
+    "menuCategory": false,
+    "shortcutName": "${productName}",
+    "artifactName": "${productName}-Windows-${version}-Setup.${ext}",
+    "include": "build/installer.nsh"
+  },
+  "portable": {
+    "artifactName": "${productName}-Windows-${version}-Portable.${ext}"
+  },
+  "linux": {
+    "target": [
+      "AppImage"
+    ],
+    "artifactName": "${productName}-Linux-${version}.${ext}"
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "thomasboyle",
+    "repo": "telichat"
+  },
+  "buildDependenciesFromSource": false,
+  "nodeGypRebuild": false,
+  "npmRebuild": false
+}
