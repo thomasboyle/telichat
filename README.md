@@ -32,14 +32,14 @@ You can always find the latest release and downloads on the [**releases page**](
 
 ### Installation (Windows)
 
-1. **Download** the latest Setup Installer from the [releases page](https://github.com/thomasboyle/ai-model-switcher/releases/latest).
+1. **Download** the latest Setup Installer from the [releases page](https://github.com/thomasboyle/telichat/releases/latest).
 2. **Run** the installer and follow the setup wizard
 3. **Launch** AI Model Switcher from Start Menu or Desktop shortcut
 4. **Press** `Ctrl+Space` anywhere to open the app
 
 ### Portable Version (Windows)
 
-1. **Download** the latest Portable Version from the [releases page](https://github.com/thomasboyle/ai-model-switcher/releases/latest).
+1. **Download** the latest Portable Version from the [releases page](https://github.com/thomasboyle/telichat/releases/latest).
 2. **Run** the executable directly - no installation needed
 3. **Press** `Ctrl+Space` anywhere to open the app
 
@@ -135,7 +135,7 @@ This project is licensed under the CC0-1.0 License - see the [LICENSE](LICENSE) 
 ## 🐛 Issues & Support
 
 If you encounter any issues or need support:
-1. Check the [Issues](https://github.com/thomasboyle/ai-model-switcher/issues) page
+1. Check the [Issues](https://github.com/thomasboyle/telichat/issues) page
 2. Create a new issue if your problem isn't already reported
 3. Provide detailed information about your system and the problem
 
