@@ -40,42 +40,23 @@ jobs:
 
       - name: Debug Token Information
         run: |
-          echo "PAT Token available: ${{ secrets.PERSONAL_ACCESS_TOKEN != '' }}"
+          echo "GH_TOKEN secret available: ${{ secrets.GH_TOKEN != '' }}"
           echo "Default GitHub Token available: ${{ secrets.GITHUB_TOKEN != '' }}"
           echo "Repository: ${{ github.repository }}"
           echo "Actor: ${{ github.actor }}"
           echo "Ref: ${{ github.ref }}"
-          echo "Attempting to use PAT first, fallback to GITHUB_TOKEN"
           if [ -n "$GH_TOKEN" ]; then
             echo "✅ GH_TOKEN is set (length: ${#GH_TOKEN})"
           else
             echo "❌ GH_TOKEN is empty or not set"
           fi
-          if [ -n "$GITHUB_TOKEN" ]; then
-            echo "✅ GITHUB_TOKEN is set (length: ${#GITHUB_TOKEN})"
-          else
-            echo "❌ GITHUB_TOKEN is empty or not set"
-          fi
         env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Set up environment variables
-        run: |
-          if [ -n "$PAT_TOKEN" ]; then
-            echo "Using Personal Access Token"
-            echo "GH_TOKEN=$PAT_TOKEN" >> $GITHUB_ENV
-            echo "GITHUB_TOKEN=$PAT_TOKEN" >> $GITHUB_ENV
-          else
-            echo "Using default GitHub Token"
-            echo "GH_TOKEN=$DEFAULT_TOKEN" >> $GITHUB_ENV
-            echo "GITHUB_TOKEN=$DEFAULT_TOKEN" >> $GITHUB_ENV
-          fi
-        env:
-          PAT_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          DEFAULT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           
       - name: Publish to GitHub Releases
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx electron-builder --publish always --win
 
   test-build:
