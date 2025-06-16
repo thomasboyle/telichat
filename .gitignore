@@ -103,7 +103,12 @@ dist/
 
 # Electron-specific
 dist-electron/
-release/
+# release/ - Commented out to allow built installers to be committed
+release/*/win-unpacked/
+release/*/*.blockmap
+release/*/builder-debug.yml
+release/*/builder-effective-config.yaml
+release/*/latest.yml
 
 # macOS
 .DS_Store

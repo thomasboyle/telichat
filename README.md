@@ -1,25 +1,21 @@
-# TeliChat - AI Model Switcher
+# AI Model Switcher
 
 <div align="center">
-  <img src="public/assets/jackybot.ico" alt="TeliChat Logo" width="64" height="64">
+  <img src="public/assets/jackybot.ico" alt="AI Model Switcher Logo" width="64" height="64">
   <h3>A powerful AI model management application with automatic updates</h3>
   
-  [![Latest Release](https://img.shields.io/github/v/release/thomasboyle/telichat?style=flat-square)](https://github.com/thomasboyle/telichat/releases/latest)
-  [![Downloads](https://img.shields.io/github/downloads/thomasboyle/telichat/total?style=flat-square)](https://github.com/thomasboyle/telichat/releases)
-  [![License](https://img.shields.io/github/license/thomasboyle/telichat?style=flat-square)](LICENSE)
+  [![Latest Release](https://img.shields.io/github/v/release/thomasboyle/ai-model-switcher?style=flat-square)](https://github.com/thomasboyle/ai-model-switcher/releases/latest)
+  [![Downloads](https://img.shields.io/github/downloads/thomasboyle/ai-model-switcher/total?style=flat-square)](https://github.com/thomasboyle/ai-model-switcher/releases)
+  [![License](https://img.shields.io/github/license/thomasboyle/ai-model-switcher?style=flat-square)](LICENSE)
 </div>
 
 ## 📥 Download
 
-### Windows
-- **[📦 Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.14-Setup.exe)** - Recommended for most users
-- **[🚀 Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.14-Portable.exe)** - No installation required
+You can always find the latest release and downloads on the [**releases page**](https://github.com/thomasboyle/ai-model-switcher/releases/latest).
 
-If the direct links above don't work, download from the [latest release page](https://github.com/thomasboyle/telichat/releases/latest).
+> **Note**: AI Model Switcher is currently Windows-only. Linux and macOS support may be added in future releases.
 
-> **Note**: TeliChat is currently Windows-only. Linux and macOS support may be added in future releases.
-
-> **Note**: TeliChat includes automatic updates, so you'll always have the latest version!
+> **Note**: AI Model Switcher includes automatic updates, so you'll always have the latest version!
 
 ## ✨ Features
 
@@ -36,14 +32,14 @@ If the direct links above don't work, download from the [latest release page](ht
 
 ### Installation (Windows)
 
-1. **Download** the [Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.14-Setup.exe)
+1. **Download** the latest Setup Installer from the [releases page](https://github.com/thomasboyle/ai-model-switcher/releases/latest).
 2. **Run** the installer and follow the setup wizard
-3. **Launch** TeliChat from Start Menu or Desktop shortcut
+3. **Launch** AI Model Switcher from Start Menu or Desktop shortcut
 4. **Press** `Ctrl+Space` anywhere to open the app
 
 ### Portable Version (Windows)
 
-1. **Download** the [Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.14-Portable.exe)
+1. **Download** the latest Portable Version from the [releases page](https://github.com/thomasboyle/ai-model-switcher/releases/latest).
 2. **Run** the executable directly - no installation needed
 3. **Press** `Ctrl+Space` anywhere to open the app
 
@@ -91,8 +87,8 @@ If the direct links above don't work, download from the [latest release page](ht
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/thomasboyle/telichat.git
-cd telichat
+git clone https://github.com/thomasboyle/ai-model-switcher.git
+cd ai-model-switcher
 
 # Install dependencies
 npm install
@@ -115,7 +111,7 @@ npm run publish
 
 ## 🔄 Auto Updates
 
-TeliChat includes automatic update functionality:
+AI Model Switcher includes automatic update functionality:
 - **Automatic Checks**: Updates are checked on app startup
 - **Background Downloads**: Updates download in the background
 - **Seamless Installation**: Updates install automatically with user notification
@@ -139,7 +135,7 @@ This project is licensed under the CC0-1.0 License - see the [LICENSE](LICENSE) 
 ## 🐛 Issues & Support
 
 If you encounter any issues or need support:
-1. Check the [Issues](https://github.com/thomasboyle/telichat/issues) page
+1. Check the [Issues](https://github.com/thomasboyle/ai-model-switcher/issues) page
 2. Create a new issue if your problem isn't already reported
 3. Provide detailed information about your system and the problem
 
