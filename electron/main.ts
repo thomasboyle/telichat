@@ -405,7 +405,7 @@ app.on('activate', () => {
 app.whenReady().then(() => {
   // Set app user model ID for proper Windows integration
   if (process.platform === 'win32') {
-    app.setAppUserModelId('com.ai-model-switcher.app')
+    app.setAppUserModelId('com.telichat.app')
   }
   
   createWindow()

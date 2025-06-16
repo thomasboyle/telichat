@@ -1,5 +1,5 @@
 {
-  "name": "ai-model-switcher-react-ts",
+  "name": "telichat-react-ts",
   "private": true,
   "version": "1.0.14",
   "description": "A powerful AI model management application",
@@ -7,9 +7,9 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thomasboyle/ai-model-switcher.git"
+    "url": "https://github.com/thomasboyle/telichat.git"
   },
-  "homepage": "https://github.com/thomasboyle/ai-model-switcher",
+  "homepage": "https://github.com/thomasboyle/telichat",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder --win",

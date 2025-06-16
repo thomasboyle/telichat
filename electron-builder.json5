@@ -1,7 +1,7 @@
 // @see - https://www.electron.build/configuration/configuration
 {
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  "appId": "com.ai-model-switcher.app",
+  "appId": "com.telichat.app",
   "asar": true,
   "productName": "AI Model Switcher",
   "icon": "public/assets/jackybot.ico",
@@ -61,7 +61,7 @@
   "publish": {
     "provider": "github",
     "owner": "thomasboyle",
-    "repo": "ai-model-switcher"
+    "repo": "telichat"
   },
   "buildDependenciesFromSource": false,
   "nodeGypRebuild": false,

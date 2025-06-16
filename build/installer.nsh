@@ -46,8 +46,8 @@
   DetailPrint "Removing application data..."
   RMDir /r "$APPDATA\TeliChat"
   RMDir /r "$LOCALAPPDATA\TeliChat"
-  RMDir /r "$APPDATA\ai-model-switcher-react-ts"
-  RMDir /r "$LOCALAPPDATA\ai-model-switcher-react-ts"
+  RMDir /r "$APPDATA\telichat-react-ts"
+  RMDir /r "$LOCALAPPDATA\telichat-react-ts"
   
   skip_data_deletion:
 !macroend
