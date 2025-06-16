@@ -33,11 +33,12 @@ jobs:
       
       - name: Debug Token
         run: |
-          if [ -n "$env:GH_TOKEN" ]; then
-            echo "✅ GH_TOKEN is available."
-          else
-            echo "❌ GH_TOKEN is NOT set. Please check the secret in the repository settings."
-          fi
+          if ($env:GH_TOKEN) {
+            Write-Host "✅ GH_TOKEN is available."
+          } else {
+            Write-Host "❌ GH_TOKEN is NOT set. Please check the secret in the repository settings."
+            exit 1
+          }
         shell: pwsh
 
       - name: Publish to GitHub Releases
