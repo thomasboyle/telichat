@@ -4,9 +4,9 @@
   <img src="public/assets/jackybot.ico" alt="AI Model Switcher Logo" width="64" height="64">
   <h3>A powerful AI model management application with automatic updates</h3>
   
-  [![Latest Release](https://img.shields.io/github/v/release/thomasboyle/ai-model-switcher?style=flat-square)](https://github.com/thomasboyle/ai-model-switcher/releases/latest)
-  [![Downloads](https://img.shields.io/github/downloads/thomasboyle/ai-model-switcher/total?style=flat-square)](https://github.com/thomasboyle/ai-model-switcher/releases)
-  [![License](https://img.shields.io/github/license/thomasboyle/ai-model-switcher?style=flat-square)](LICENSE)
+  [![Latest Release](https://img.shields.io/github/v/release/thomasboyle/telichat?style=flat-square)](https://github.com/thomasboyle/telichat/releases/latest)
+  [![Downloads](https://img.shields.io/github/downloads/thomasboyle/telichat/total?style=flat-square)](https://github.com/thomasboyle/telichat/releases)
+  [![License](https://img.shields.io/github/license/thomasboyle/telichat?style=flat-square)](LICENSE)
 </div>
 
 ## 📥 Download
