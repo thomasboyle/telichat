@@ -7,9 +7,11 @@ on:
 
 permissions:
   contents: write
-  packages: write
-  pull-requests: write
-  issues: write
+  actions: read
+  security-events: read
+  statuses: read
+  packages: read
+  deployments: read
 
 jobs:
   release:
@@ -36,17 +38,20 @@ jobs:
       - name: Build Electron app
         run: npm run build
 
+      - name: Debug Token Information
+        run: |
+          echo "GitHub Token first 10 chars: ${GITHUB_TOKEN:0:10}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Ref: ${{ github.ref }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Publish to GitHub Releases
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EP_GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Token available: ${{ secrets.GITHUB_TOKEN != '' }}"
-          echo "Setting token..."
-          export GH_TOKEN="${{ secrets.GITHUB_TOKEN }}"
-          export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
-          npx electron-builder --publish always --win
+        run: npx electron-builder --publish always --win
 
   test-build:
     runs-on: ubuntu-latest

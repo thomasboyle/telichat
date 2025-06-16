@@ -61,8 +61,7 @@
   "publish": {
     "provider": "github",
     "owner": "thomasboyle",
-    "repo": "telichat",
-    "token": "${process.env.GH_TOKEN || process.env.GITHUB_TOKEN}"
+    "repo": "telichat"
   },
   "buildDependenciesFromSource": false,
   "nodeGypRebuild": false,
