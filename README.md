@@ -11,7 +11,7 @@
 
 ## 📥 Download
 
-You can always find the latest release and downloads on the [**releases page**](https://github.com/thomasboyle/ai-model-switcher/releases/latest).
+You can always find the latest release and downloads on the [**releases page**](https://github.com/thomasboyle/telichat/releases/latest).
 
 > **Note**: AI Model Switcher is currently Windows-only. Linux and macOS support may be added in future releases.
 
