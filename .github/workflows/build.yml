@@ -7,6 +7,9 @@ on:
 
 permissions:
   contents: write
+  packages: write
+  pull-requests: write
+  issues: write
 
 jobs:
   release:
@@ -37,7 +40,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx electron-builder --publish always --win
+          EP_GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Token available: ${{ secrets.GITHUB_TOKEN != '' }}"
+          echo "Setting token..."
+          export GH_TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
+          npx electron-builder --publish always --win
 
   test-build:
     runs-on: ubuntu-latest

@@ -12,8 +12,8 @@
 ## 📥 Download
 
 ### Windows
-- **[📦 Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.6-Setup.exe)** - Recommended for most users
-- **[🚀 Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.6-Portable.exe)** - No installation required
+- **[📦 Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.7-Setup.exe)** - Recommended for most users
+- **[🚀 Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.7-Portable.exe)** - No installation required
 
 If the direct links above don't work, download from the [latest release page](https://github.com/thomasboyle/telichat/releases/latest).
 
@@ -36,14 +36,14 @@ If the direct links above don't work, download from the [latest release page](ht
 
 ### Installation (Windows)
 
-1. **Download** the [Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.0-Setup.exe)
+1. **Download** the [Setup Installer](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.7-Setup.exe)
 2. **Run** the installer and follow the setup wizard
 3. **Launch** TeliChat from Start Menu or Desktop shortcut
 4. **Press** `Ctrl+Space` anywhere to open the app
 
 ### Portable Version (Windows)
 
-1. **Download** the [Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.0-Portable.exe)
+1. **Download** the [Portable Version](https://github.com/thomasboyle/telichat/releases/latest/download/TeliChat-Windows-1.0.7-Portable.exe)
 2. **Run** the executable directly - no installation needed
 3. **Press** `Ctrl+Space` anywhere to open the app
 
