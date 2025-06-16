@@ -52,8 +52,7 @@
     "runAfterFinish": true,
     "menuCategory": false,
     "shortcutName": "${productName}",
-    "artifactName": "${productName}-Windows-${version}-Setup.${ext}",
-    "include": "build/installer.nsh"
+    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
   },
   "portable": {
     "artifactName": "${productName}-Windows-${version}-Portable.${ext}"
