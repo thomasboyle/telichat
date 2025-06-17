@@ -1,0 +1,47 @@
+# Source files
+src/
+electron/
+*.ts
+*.tsx
+*.map
+
+# Development files
+.git/
+.vscode/
+.idea/
+*.log
+*.md
+README.md
+HELP.md
+TROUBLESHOOTING.md
+
+# Build files
+node_modules/
+dist/
+release/
+coverage/
+.nyc_output/
+
+# Test files
+**/*.test.*
+**/*.spec.*
+**/test/
+**/tests/
+
+# Config files
+.eslintrc*
+.prettierrc*
+tsconfig*.json
+vite.config.ts
+electron-builder.json5
+
+# OS files
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+
+# Package files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml 

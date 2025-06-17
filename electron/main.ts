@@ -12,12 +12,33 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 autoUpdater.autoDownload = false // Don't auto-download, let user choose
 autoUpdater.autoInstallOnAppQuit = true
 
-// Auto-updater logging
+// Auto-updater logging with more detailed info
 autoUpdater.logger = {
-  info: (message: any) => console.log('AutoUpdater Info:', message),
-  warn: (message: any) => console.warn('AutoUpdater Warn:', message),
-  error: (message: any) => console.error('AutoUpdater Error:', message),
-  debug: (message: any) => console.debug('AutoUpdater Debug:', message)
+  info: (message: any) => {
+    console.log('AutoUpdater Info:', message);
+    // Also send to renderer for debugging
+    if (win && !win.isDestroyed()) {
+      win.webContents.send('updater-log', { level: 'info', message });
+    }
+  },
+  warn: (message: any) => {
+    console.warn('AutoUpdater Warn:', message);
+    if (win && !win.isDestroyed()) {
+      win.webContents.send('updater-log', { level: 'warn', message });
+    }
+  },
+  error: (message: any) => {
+    console.error('AutoUpdater Error:', message);
+    if (win && !win.isDestroyed()) {
+      win.webContents.send('updater-log', { level: 'error', message });
+    }
+  },
+  debug: (message: any) => {
+    console.debug('AutoUpdater Debug:', message);
+    if (win && !win.isDestroyed()) {
+      win.webContents.send('updater-log', { level: 'debug', message });
+    }
+  }
 };
 
 // The built directory structure
@@ -68,6 +89,8 @@ autoUpdater.on('update-available', (info) => {
 
 autoUpdater.on('update-not-available', (info) => {
   console.log('Update not available:', info)
+  console.log('Current version:', app.getVersion())
+  console.log('Latest version from server:', info?.version || 'unknown')
   // Notify renderer if window exists
   if (win && !win.isDestroyed()) {
     win.webContents.send('update-status', { status: 'not-available' })
@@ -542,6 +565,19 @@ app.whenReady().then(() => {
   // Initialize auto-updater after app is ready
   if (!VITE_DEV_SERVER_URL) {
     console.log('App version:', app.getVersion())
+    
+    // Explicitly set the update server URL for debugging
+    try {
+      autoUpdater.setFeedURL({
+        provider: 'github',
+        owner: 'thomasboyle',
+        repo: 'telichat'
+      });
+      console.log('Feed URL set successfully')
+    } catch (error) {
+      console.error('Error setting feed URL:', error)
+    }
+    
     console.log('Auto-updater feed URL:', autoUpdater.getFeedURL())
     
     // Only check for updates in production
@@ -658,13 +694,32 @@ app.whenReady().then(() => {
 
   // Auto-updater handlers
   ipcMain.handle('check-for-updates', async () => {
+    console.log('=== UPDATE CHECK REQUESTED ===');
+    console.log('VITE_DEV_SERVER_URL:', VITE_DEV_SERVER_URL);
+    console.log('App version:', app.getVersion());
+    console.log('Feed URL:', autoUpdater.getFeedURL());
+    
     if (!VITE_DEV_SERVER_URL) {
       try {
         console.log('Manually checking for updates...')
-        await autoUpdater.checkForUpdatesAndNotify()
+        console.log('AutoUpdater configuration:');
+        console.log('- autoDownload:', autoUpdater.autoDownload);
+        console.log('- autoInstallOnAppQuit:', autoUpdater.autoInstallOnAppQuit);
+        
+        // Add timeout to prevent hanging
+        const updateCheckPromise = autoUpdater.checkForUpdatesAndNotify();
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => {
+            reject(new Error('Update check timed out after 30 seconds'));
+          }, 30000);
+        });
+        
+        await Promise.race([updateCheckPromise, timeoutPromise]);
+        console.log('checkForUpdatesAndNotify completed successfully')
         return { success: true }
       } catch (error) {
         console.error('Error checking for updates:', error)
+        console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace')
         if (win && !win.isDestroyed()) {
           win.webContents.send('update-status', { 
             status: 'error', 

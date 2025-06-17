@@ -3,6 +3,7 @@
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
   "appId": "com.telichat.app",
   "asar": true,
+  "asarUnpack": [],
   "productName": "TeliChat",
   "icon": "public/assets/jackybot.ico",
   "directories": {
@@ -12,11 +13,30 @@
     "dist",
     "dist-electron",
     "public/**/*",
-    "public/assets/jackybot.ico"
+    "public/assets/jackybot.ico",
+    "!node_modules/**/*",
+    "!src/**/*",
+    "!electron/**/*",
+    "!release/**/*",
+    "!*.md",
+    "!*.log",
+    "!*.map",
+    "!**/*.ts",
+    "!**/*.tsx",
+    "!**/.git*",
+    "!**/test/**/*",
+    "!**/tests/**/*",
+    "!**/*.test.*",
+    "!**/*.spec.*",
+    "!**/coverage/**/*",
+    "!**/.nyc_output/**/*"
   ],
   "extraMetadata": {
     "main": "dist-electron/main.js"
   },
+  "compression": "maximum",
+  "removePackageScripts": true,
+  "removePackageKeywords": true,
 
   "win": {
     "icon": "public/assets/jackybot.ico",
@@ -39,7 +59,8 @@
     "signAndEditExecutable": false,
     "sign": null,
     "certificateFile": null,
-    "certificatePassword": null
+    "certificatePassword": null,
+    "requestedExecutionLevel": "asInvoker"
   },
   "nsis": {
     "oneClick": false,
@@ -52,7 +73,8 @@
     "runAfterFinish": true,
     "menuCategory": false,
     "shortcutName": "${productName}",
-    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+    "artifactName": "${productName}-Windows-${version}-Setup.${ext}",
+    "differentialPackage": false
   },
   "portable": {
     "artifactName": "${productName}-Windows-${version}-Portable.${ext}"

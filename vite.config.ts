@@ -47,6 +47,28 @@ export default defineConfig({
         : {},
     }),
   ],
+  build: {
+    minify: 'terser',
+    cssMinify: true,
+    reportCompressedSize: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          markdown: ['react-markdown'],
+          dnd: ['@dnd-kit/core', '@dnd-kit/sortable']
+        }
+      }
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.debug', 'console.info', 'console.warn']
+      }
+    },
+    chunkSizeWarningLimit: 1000
+  },
   server: {
     proxy: {
       // Proxy API requests to LM Studio
