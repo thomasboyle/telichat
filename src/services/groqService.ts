@@ -1,19 +1,4 @@
-interface GroqResponse {
-  choices: Array<{
-    delta?: {
-      content?: string;
-    };
-    message?: {
-      content?: string;
-      executed_tools?: Array<{
-        type: string;
-        name: string;
-        input: any;
-        output: any;
-      }>;
-    };
-  }>;
-}
+
 
 export interface GroqServiceCallbacks {
   onResponseUpdate: (content: string) => void;
