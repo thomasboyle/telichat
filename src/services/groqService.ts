@@ -171,6 +171,7 @@ export class GroqService {
     let fullContent = '';
     let sourcesExtracted = false;
     let hasReceivedAnyContent = false;
+    let buffer = ''; // Buffer for accumulating partial chunks
 
     try {
       while (true) {
@@ -178,11 +179,17 @@ export class GroqService {
         if (done) break;
 
         const chunk = decoder.decode(value);
+        buffer += chunk;
+        
         console.log('=== GROQ STREAMING CHUNK ===');
         console.log('Raw chunk:', chunk);
+        console.log('Current buffer:', buffer);
         console.log('============================');
         
-        const lines = chunk.split('\n');
+        // Process complete lines from buffer
+        const lines = buffer.split('\n');
+        // Keep the last line in buffer (might be incomplete)
+        buffer = lines.pop() || '';
 
         for (const line of lines) {
           if (line.startsWith('data: ')) {
@@ -193,6 +200,10 @@ export class GroqService {
               console.log('Stream completed with [DONE]');
               callbacks.onComplete();
               return;
+            }
+            
+            if (data === '') {
+              continue; // Skip empty data lines
             }
             
             try {
@@ -290,8 +301,22 @@ export class GroqService {
                 }
               }
             } catch (e) {
-              // Ignore parsing errors for incomplete chunks
-              console.log('Skipping chunk parse error:', e);
+              // Handle JSON parsing errors more gracefully
+              if (e instanceof SyntaxError && e.message.includes('Unterminated string')) {
+                console.log('Detected unterminated JSON string, likely due to chunked data. Data:', data);
+                // Try to extract any partial content that might be usable
+                const partialContent = GroqService.extractPartialContent(data);
+                if (partialContent) {
+                  hasReceivedAnyContent = true;
+                  fullContent += partialContent;
+                  console.log('Extracted partial content:', partialContent);
+                  callbacks.onResponseUpdate(fullContent);
+                }
+                continue;
+              } else {
+                console.log('Skipping chunk parse error:', e);
+                console.log('Problematic data:', data);
+              }
             }
           }
         }
@@ -368,6 +393,31 @@ export class GroqService {
 
     console.log('Extracted sources from executed_tools:', sources);
     return sources;
+  }
+
+  private static extractPartialContent(malformedJson: string): string | null {
+    try {
+      // Try to extract content from malformed JSON using regex
+      // Look for content patterns commonly used in streaming responses
+      const contentMatches = [
+        /["']content["']\s*:\s*["']([^"']*)/,
+        /["']delta["']\s*:\s*{[^}]*["']content["']\s*:\s*["']([^"']*)/,
+        /["']message["']\s*:\s*{[^}]*["']content["']\s*:\s*["']([^"']*)/
+      ];
+
+      for (const pattern of contentMatches) {
+        const match = malformedJson.match(pattern);
+        if (match && match[1]) {
+          console.log('Extracted partial content using pattern:', pattern);
+          return match[1];
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.log('Error extracting partial content:', error);
+      return null;
+    }
   }
 
   private static extractSourcesFromToolCalls(toolCalls: Array<any>): Array<{ title: string; url: string }> {
