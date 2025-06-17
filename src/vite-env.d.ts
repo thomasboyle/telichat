@@ -29,6 +29,10 @@ interface Window {
     loadApiKeys: () => Promise<any>;
     saveApiKeys: (apiKeys: any) => Promise<boolean>;
     onSettingsChanged: (callback: (settings: any) => void) => () => void;
+    checkForUpdates: () => Promise<{ success: boolean; error?: string }>;
+    installUpdate: () => Promise<{ success: boolean }>;
+    getAppVersion: () => Promise<string>;
+    onUpdateStatus: (callback: (status: any) => void) => () => void;
     openUrl: (url: string) => Promise<{ success: boolean; error?: string }>;
   };
 }
