@@ -1,4 +1,4 @@
-# AI Model Switcher
+# TeliChat
 
 <div align="center">
   <img src="public/assets/jackybot.ico" alt="AI Model Switcher Logo" width="64" height="64">
