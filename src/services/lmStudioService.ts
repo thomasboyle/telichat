@@ -52,7 +52,8 @@ export class LMStudioService {
     prompt: string, 
     modelId: string,
     callbacks: DeepSeekServiceCallbacks,
-    contextMessages: Array<{ role: 'user' | 'assistant', content: string }> = []
+    contextMessages: Array<{ role: 'user' | 'assistant', content: string }> = [],
+    images?: Array<{ data: string; type: string }>
   ): Promise<void> {
     try {
       // Test connection first
@@ -62,13 +63,37 @@ export class LMStudioService {
         return;
       }
       
+      // Filter out any messages with empty content to prevent API errors
+      const validContextMessages = contextMessages.filter(message => 
+        message.content && message.content.trim().length > 0
+      );
+      
+      // Prepare user message with optional images
+      let userMessage: any = {
+        role: 'user' as const,
+        content: prompt
+      };
+
+      // If images are provided, format for vision-capable models
+      if (images && images.length > 0) {
+        userMessage.content = [
+          {
+            type: 'text',
+            text: prompt
+          },
+          ...images.map(image => ({
+            type: 'image_url',
+            image_url: {
+              url: image.data
+            }
+          }))
+        ];
+      }
+      
       // Prepare messages with conversation context
       const messages = [
-        ...contextMessages,
-        {
-          role: 'user' as const,
-          content: prompt
-        }
+        ...validContextMessages,
+        userMessage
       ];
 
       const requestBody = {

@@ -28,6 +28,12 @@ export class MemoryService {
   
   // Add a new conversation entry
   static async addEntry(prompt: string, response: string, modelId: string): Promise<void> {
+    // Don't save entries with empty prompt or response
+    if (!prompt.trim() || !response.trim()) {
+      console.warn('Skipping conversation entry with empty prompt or response');
+      return;
+    }
+    
     const entry: ConversationEntry = {
       id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
       timestamp: Date.now(),
@@ -54,8 +60,13 @@ export class MemoryService {
     const reversedEntries = [...this.memory.entries].reverse();
     
     for (const entry of reversedEntries) {
-      messages.push({ role: 'user', content: entry.prompt });
-      messages.push({ role: 'assistant', content: entry.response });
+      // Only add messages with non-empty content
+      if (entry.prompt && entry.prompt.trim()) {
+        messages.push({ role: 'user', content: entry.prompt });
+      }
+      if (entry.response && entry.response.trim()) {
+        messages.push({ role: 'assistant', content: entry.response });
+      }
     }
     
     return messages;

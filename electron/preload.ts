@@ -59,4 +59,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('update-status', (event, status) => callback(status))
     return () => ipcRenderer.removeAllListeners('update-status')
   },
+  // Open external URLs in default browser
+  openUrl: (url: string): Promise<{ success: boolean; error?: string }> => ipcRenderer.invoke('open-external-url', url),
 })

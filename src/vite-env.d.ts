@@ -29,5 +29,6 @@ interface Window {
     loadApiKeys: () => Promise<any>;
     saveApiKeys: (apiKeys: any) => Promise<boolean>;
     onSettingsChanged: (callback: (settings: any) => void) => () => void;
+    openUrl: (url: string) => Promise<{ success: boolean; error?: string }>;
   };
 }

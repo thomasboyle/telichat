@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu, nativeImage, screen } from 'electron'
+import { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu, nativeImage, screen, shell } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
@@ -650,6 +650,17 @@ app.whenReady().then(() => {
     autoUpdater.quitAndInstall()
     return { success: true }
   })
+
+  // Open external URLs in default browser
+  ipcMain.handle('open-external-url', async (event, url: string) => {
+    try {
+      await shell.openExternal(url)
+      return { success: true }
+    } catch (error) {
+      console.error('Failed to open external URL:', error)
+      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' }
+    }
+  })
 })
 
 // Handle system shutdown/restart signals
@@ -874,7 +885,7 @@ const loadSettings = (): any => {
       const parsed = JSON.parse(data)
       return parsed.settings || {
         enabledModels: {
-          'gpt-4': true,
+          'groq': true,
           'claude': true,
           'gemini': true,
           'llama': true,
@@ -888,7 +899,7 @@ const loadSettings = (): any => {
   }
   return {
     enabledModels: {
-      'gpt-4': true,
+      'groq': true,
       'claude': true,
       'gemini': true,
       'llama': true,

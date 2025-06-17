@@ -18,7 +18,7 @@ const Settings: React.FC = () => {
   const [activeSection, setActiveSection] = useState<SettingsSection>('settings');
   const [settings, setSettings] = useState<SettingsData>({
     enabledModels: {
-      'gpt-4': true,
+      'groq': true,
       'claude': true,
       'gemini': true,
       'llama': true,
@@ -31,7 +31,7 @@ const Settings: React.FC = () => {
   const [saveStatus, setSaveStatus] = useState<string>('');
 
   const models = [
-    { id: 'gpt-4', name: 'GroqSearch*', description: 'Groq-powered search model' },
+    { id: 'groq', name: 'GroqSearch*', description: 'Groq-powered search model' },
     { id: 'claude', name: 'Claude', description: 'Anthropic Claude model' },
     { id: 'gemini', name: 'Gemini', description: 'Google Gemini model' },
     { id: 'llama', name: 'Llama*', description: 'Meta Llama model via LM Studio' },
