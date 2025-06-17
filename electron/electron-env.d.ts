@@ -27,6 +27,7 @@ interface Window {
   electronAPI: {
     startWindowDrag: () => void,
     resizeWindow: (height: number) => void,
+    hideMainWindow: () => void,
     onFocusInput: (callback: () => void) => () => void,
     loadModelOrder: () => Promise<string[] | null>,
     saveModelOrder: (modelOrder: string[]) => Promise<boolean>,
@@ -38,5 +39,11 @@ interface Window {
     saveSettings: (settings: any) => Promise<boolean>,
     loadApiKeys: () => Promise<any>,
     saveApiKeys: (apiKeys: any) => Promise<boolean>,
+    onSettingsChanged: (callback: (settings: any) => void) => () => void,
+    checkForUpdates: () => Promise<{ success: boolean; error?: string }>,
+    installUpdate: () => Promise<{ success: boolean }>,
+    getAppVersion: () => Promise<string>,
+    onUpdateStatus: (callback: (status: any) => void) => () => void,
+    openUrl: (url: string) => Promise<{ success: boolean; error?: string }>,
   }
 }

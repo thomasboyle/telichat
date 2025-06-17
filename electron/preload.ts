@@ -55,6 +55,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // Auto-updater functions
   checkForUpdates: (): Promise<{ success: boolean }> => ipcRenderer.invoke('check-for-updates'),
   installUpdate: (): Promise<{ success: boolean }> => ipcRenderer.invoke('install-update'),
+  getAppVersion: (): Promise<string> => ipcRenderer.invoke('get-app-version'),
   onUpdateStatus: (callback: (status: any) => void) => {
     ipcRenderer.on('update-status', (event, status) => callback(status))
     return () => ipcRenderer.removeAllListeners('update-status')

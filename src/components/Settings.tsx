@@ -12,6 +12,13 @@ interface ApiKeys {
   gemini?: string;
 }
 
+interface UpdateStatus {
+  status: 'idle' | 'checking' | 'available' | 'not-available' | 'downloading' | 'downloaded' | 'error';
+  version?: string;
+  progress?: number;
+  error?: string;
+}
+
 type SettingsSection = 'settings' | 'apis' | 'about';
 
 const Settings: React.FC = () => {
@@ -29,6 +36,8 @@ const Settings: React.FC = () => {
   const [apiKeys, setApiKeys] = useState<ApiKeys>({});
   const [loading, setLoading] = useState(true);
   const [saveStatus, setSaveStatus] = useState<string>('');
+  const [updateStatus, setUpdateStatus] = useState<UpdateStatus>({ status: 'idle' });
+  const [appVersion, setAppVersion] = useState<string>('1.0.0');
 
   const models = [
     { id: 'groq', name: 'GroqSearch*', description: 'Groq-powered search model' },
@@ -41,6 +50,16 @@ const Settings: React.FC = () => {
 
   useEffect(() => {
     loadData();
+    loadAppVersion();
+    
+    // Listen for update status messages
+    const cleanupUpdateListener = window.electronAPI.onUpdateStatus((status: UpdateStatus) => {
+      setUpdateStatus(status);
+    });
+
+    return () => {
+      cleanupUpdateListener();
+    };
   }, []);
 
   // Handle ESC key to close settings window
@@ -68,6 +87,16 @@ const Settings: React.FC = () => {
       console.error('Failed to load settings:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadAppVersion = async () => {
+    try {
+      // Get version from electron main process
+      const version = await window.electronAPI.getAppVersion();
+      setAppVersion(version);
+    } catch (error) {
+      console.error('Failed to load app version:', error);
     }
   };
 
@@ -124,6 +153,63 @@ const Settings: React.FC = () => {
 
   const handleApiKeySave = () => {
     saveApiKeys(apiKeys);
+  };
+
+  const handleCheckForUpdates = async () => {
+    try {
+      setUpdateStatus({ status: 'checking' });
+      await window.electronAPI.checkForUpdates();
+    } catch (error) {
+      console.error('Failed to check for updates:', error);
+      setUpdateStatus({ status: 'error', error: 'Failed to check for updates' });
+    }
+  };
+
+  const handleInstallUpdate = async () => {
+    try {
+      await window.electronAPI.installUpdate();
+    } catch (error) {
+      console.error('Failed to install update:', error);
+    }
+  };
+
+  const renderUpdateStatus = () => {
+    const { status, version, progress, error } = updateStatus;
+    
+    switch (status) {
+      case 'checking':
+        return <div className="update-status checking">Checking for updates...</div>;
+      case 'available':
+        return (
+          <div className="update-status available">
+            Update available! Version {version} is ready to download.
+          </div>
+        );
+      case 'downloading':
+        return (
+          <div className="update-status downloading">
+            Downloading update... {progress}%
+            <div className="progress-bar">
+              <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+            </div>
+          </div>
+        );
+      case 'downloaded':
+        return (
+          <div className="update-status downloaded">
+            Update downloaded! Version {version} will install automatically.
+            <button onClick={handleInstallUpdate} className="install-now-btn">
+              Install Now
+            </button>
+          </div>
+        );
+      case 'not-available':
+        return <div className="update-status up-to-date">You're running the latest version!</div>;
+      case 'error':
+        return <div className="update-status error">Error: {error}</div>;
+      default:
+        return null;
+    }
   };
 
   const renderSettingsSection = () => (
@@ -218,8 +304,20 @@ const Settings: React.FC = () => {
       <h2>About</h2>
       <div className="about-content">
         <h3>AI Model Switcher</h3>
-        <p>Version 1.0.0</p>
+        <p>Version {appVersion}</p>
         <p>A powerful AI model switching application that allows you to seamlessly switch between different AI models and providers.</p>
+        
+        <div className="update-section">
+          <h4>Updates</h4>
+          <button 
+            className="check-updates-btn" 
+            onClick={handleCheckForUpdates}
+            disabled={updateStatus.status === 'checking' || updateStatus.status === 'downloading'}
+          >
+            {updateStatus.status === 'checking' ? 'Checking...' : 'Check for Updates'}
+          </button>
+          {renderUpdateStatus()}
+        </div>
         
         <h4>Features:</h4>
         <ul>

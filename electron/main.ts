@@ -8,6 +8,18 @@ import fs from 'node:fs'
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+// Configure auto-updater
+autoUpdater.autoDownload = false // Don't auto-download, let user choose
+autoUpdater.autoInstallOnAppQuit = true
+
+// Auto-updater logging
+autoUpdater.logger = {
+  info: (message: any) => console.log('AutoUpdater Info:', message),
+  warn: (message: any) => console.warn('AutoUpdater Warn:', message),
+  error: (message: any) => console.error('AutoUpdater Error:', message),
+  debug: (message: any) => console.debug('AutoUpdater Debug:', message)
+};
+
 // The built directory structure
 //
 // ├─┬─┬ dist
@@ -50,6 +62,8 @@ autoUpdater.on('update-available', (info) => {
       releaseDate: info.releaseDate
     })
   }
+  // Start download automatically
+  autoUpdater.downloadUpdate()
 })
 
 autoUpdater.on('update-not-available', (info) => {
@@ -96,10 +110,8 @@ autoUpdater.on('update-downloaded', (info) => {
     })
   }
   
-  // Auto-install after 5 seconds, giving user time to save work
-  setTimeout(() => {
-    autoUpdater.quitAndInstall()
-  }, 5000)
+  // Don't auto-install, let user choose via the UI
+  console.log('Update ready to install. User can install via Settings > About > Install Now')
 })
 
 // Startup functionality helpers
@@ -529,10 +541,16 @@ app.whenReady().then(() => {
   
   // Initialize auto-updater after app is ready
   if (!VITE_DEV_SERVER_URL) {
+    console.log('App version:', app.getVersion())
+    console.log('Auto-updater feed URL:', autoUpdater.getFeedURL())
+    
     // Only check for updates in production
     setTimeout(() => {
+      console.log('Starting automatic update check...')
       autoUpdater.checkForUpdatesAndNotify()
     }, 3000) // Wait 3 seconds after app start
+  } else {
+    console.log('Running in development mode, auto-updater disabled')
   }
 
   globalShortcut.register('CommandOrControl+Space', () => {
@@ -639,16 +657,42 @@ app.whenReady().then(() => {
   })
 
   // Auto-updater handlers
-  ipcMain.handle('check-for-updates', () => {
+  ipcMain.handle('check-for-updates', async () => {
     if (!VITE_DEV_SERVER_URL) {
-      autoUpdater.checkForUpdatesAndNotify()
+      try {
+        console.log('Manually checking for updates...')
+        await autoUpdater.checkForUpdatesAndNotify()
+        return { success: true }
+      } catch (error) {
+        console.error('Error checking for updates:', error)
+        if (win && !win.isDestroyed()) {
+          win.webContents.send('update-status', { 
+            status: 'error', 
+            error: error instanceof Error ? error.message : 'Unknown error' 
+          })
+        }
+        return { success: false, error: error instanceof Error ? error.message : 'Unknown error' }
+      }
+    } else {
+      console.log('Skipping update check in development mode')
+      if (win && !win.isDestroyed()) {
+        win.webContents.send('update-status', { 
+          status: 'error', 
+          error: 'Updates are disabled in development mode' 
+        })
+      }
+      return { success: false, error: 'Updates are disabled in development mode' }
     }
-    return { success: true }
   })
 
   ipcMain.handle('install-update', () => {
     autoUpdater.quitAndInstall()
     return { success: true }
+  })
+
+  // Get app version
+  ipcMain.handle('get-app-version', () => {
+    return app.getVersion()
   })
 
   // Open external URLs in default browser
