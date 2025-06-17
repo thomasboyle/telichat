@@ -1,7 +1,7 @@
 {
   "name": "telichat-react-ts",
   "private": true,
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "A powerful AI model management application",
   "author": "Thomas Boyle",
   "type": "module",
